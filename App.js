@@ -3,8 +3,8 @@ import { StyleSheet, TouchableWithoutFeedback, Text, Image, TouchableHighlight, 
 
 // import WelcomeScreen from './app/screens/welcomeScreen';
 // import TrendingGifs from './app/screens/TrendingGif';
-// import HomeScreen from './app/screens/HomeScreen';
-import HomeScreen2 from './app/screens/HomeScreen2';
+ import HomeScreen from './app/screens/HomeScreen';
+
 export default function App() {
   return (
     // <SafeAreaView style={styles.container}>
@@ -79,7 +79,7 @@ export default function App() {
     
     // <TrendingGifs/>
     // <WelcomeScreen/>
-    <HomeScreen2/>
+    <HomeScreen/>
   );
 }
 

@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { View, TextInput, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'; // Import your chosen icon library.
-// import TrendingGif from './TrendingGif';
-import TrendingGifs from './temp';
+
+import TrendingGifs from './TrendingGif';
+
 
 const HomeScreen = () => {
     const [searchTerm, setSearchTerm] = useState('');
+    const [searchTermCurrent, setSearchTermCurrent] = useState('');
     const [isDarkTheme, setIsDarkTheme] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const toggleTheme = () => {
         setIsDarkTheme(!isDarkTheme);
@@ -65,26 +68,27 @@ const HomeScreen = () => {
 
     const handleSearch = (text) => {
         text = text.trim();
-        setSearchTerm(text);
+        setSearchTermCurrent(text);
         // Implement a debounce function here
         clearTimeout(this.timer);
         this.timer = setTimeout(() => {
             // Call your API here with the updated search term
             console.log(`Fetching gifs for ${text}`);
-        }, 6000); // Adjust the delay (in milliseconds) as needed
+        }, 1000); // Adjust the delay (in milliseconds) as needed
     };
 
     const handleSearchSubmit = () => {
-        setSearchTerm(searchTerm);
+        setSearchTerm(searchTermCurrent);
     }
 
     return (
         <View style={isDarkTheme ? darkStyles.container : lightStyles.container}>
+
             <TextInput
                 style={isDarkTheme ? darkStyles.searchBar : lightStyles.searchBar}
                 placeholderTextColor={isDarkTheme ? 'gray' : 'black'}
                 placeholder="Search GIFs"
-                value={searchTerm}
+                value={searchTermCurrent}
                 onChangeText={handleSearch}
                 onSubmitEditing={handleSearchSubmit}
             />
@@ -96,7 +100,7 @@ const HomeScreen = () => {
                 />
             </TouchableOpacity>
             {/* <GifController /> */}
-            <TrendingGifs />
+        <TrendingGifs searchTerm={searchTerm}/>
         </View>
     );
 };

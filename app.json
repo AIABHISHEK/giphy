@@ -21,10 +21,17 @@
       "adaptiveIcon": {
         "foregroundImage": "./app/assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.aiabhishek.giphy"
     },
     "web": {
       "favicon": "./app/assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "92b0f81e-9f53-46c0-a354-a66006a2416a"
+      }
+    },
+    "owner": "aiabhishek"
   }
 }

@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Image, FlatList } from 'react-native';
-import GifImage from '@lowkey/react-native-gif';
-import ControlledGifView from 'react-native-controlled-gif';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const TrendingGifs = (props) => {
     const [trendingGifs, setTrendingGifs] = useState([]);
     const [numGifsToLoad, setNumGifsToLoad] = useState(10);
-    const searchTerm = props.searchTerm;
+    let searchTerm = props.searchTerm;
     const [isLoading, setIsLoading] = useState(false);
     const [searchType, setSearchType] = useState('trending');
     useEffect(() => {
         const fetchTrendingGifs = async () => {
+            
             setIsLoading(true);
+            console.log('fetching trending gifs');
             try {
-                if (searchTerm) {
+                if (searchTerm.length > 0) {
                     setSearchType('search');
                 }
                 // Fetch trending GIFs using your API
@@ -30,31 +31,27 @@ const TrendingGifs = (props) => {
             } catch (error) {
                 console.error('Error fetching trending GIFs:', error);
             }
-            setIsLoading(false);
+            
         };
-        if (isLoading === false) {
-            fetchTrendingGifs();
+        if (!isLoading) {
+            fetchTrendingGifs().then(() => {
+                console.log('trending gifs fetched');
+                setIsLoading(false);
+            })
         }
     }, [searchTerm, numGifsToLoad]);
 
     return (
         <View >
+            <Spinner
+                visible={isLoading}
+                textContent={'Loading...'}
+            />
             <FlatList
                 data={trendingGifs.data}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
                     <Image source={{ uri: item.images.original.webp }} style={{ width: '45%', height: 200, aspectRatio: 1, margin: 8 }} />
-                    // <GifImage
-                    //     source={{
-                    //         uri:
-                    //             'https://media.tenor.com/images/1c39f2d94b02d8c9366de265d0fba8a0/tenor.gif',
-                    //     }}
-                    //     style={{
-                    //         width: 100,
-                    //         height: 100,
-                    //     }}
-                    //     resizeMode={'cover'}
-                    // />
                 )}
                 numColumns={2}
                 style={styles.flatListContainer}
